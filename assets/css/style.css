@@ -1,0 +1,24 @@
+body {
+	background: url("../images/starwarsbackground.jpg") center;
+	background-size: cover;
+}
+ * {
+	color: #FFF;
+	-webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+    font-family: 'Arial', sans-serif;
+}
+
+.luke, .vader, .kyloren, .rey, {
+	text-align: center;
+}
+
+img {
+	width: 200px;
+	height: 150px;
+	padding: 10px;
+}
+
+button {
+	padding: 10px;
+}
