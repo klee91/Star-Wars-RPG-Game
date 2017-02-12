@@ -1,23 +1,4 @@
-// var luke= {
-// 	hp : 80,
-// 	str: randomAttack,
-// 	counter: randomCounter,
-// };
-// var vader = {
-// 	hp : ,
-// 	str: randomAttack,
-// 	counter: ,
-// };
-// var kyloRen = {
-// 	hp : ,
-// 	str: ,
-// 	counter: ,
-// };
-// var rey = {
-// 	hp : ,
-// 	str: ,
-// 	counter: ,
-// };
+
 var hpOptions = [120 , 100, 150, 180];
 var attackOptions=[5,8,12,18];
 var counterOptions=[3,6,13,20];
@@ -25,31 +6,36 @@ var randomHp = 0;
 var randomAttack = 0;
 var randomCounter = 0;
 
-
+//take out HP option from array after being assigned
 function deleteRandomHp() {
 	hpOptions.splice(hpOptions.indexOf(randomHp),1);
 }
 
+//assign random HP
 function getRandomHp() {
 	randomHp = hpOptions[Math.floor(Math.random() * hpOptions.length)];
 	deleteRandomHp();
 	return randomHp;
 }
 
+//take out attack option
 function deleteRandomAttack() {
 	attackOptions.splice(attackOptions.indexOf(randomAttack),1);
 }
 
+//assign random attack
 function getRandomAttack() {
 	randomAttack = attackOptions[Math.floor(Math.random() * attackOptions.length)];
 	deleteRandomAttack();
 	return randomAttack;
 }
 
+//take out counter attack option
 function deleteRandomCounter() {
 	counterOptions.splice(counterOptions.indexOf(randomCounter),1);
 }
 
+//assign random counter attack
 function getRandomCounter() {
 	randomCounter = counterOptions[Math.floor(Math.random() * counterOptions.length)];
 	deleteRandomCounter();
@@ -59,13 +45,13 @@ function getRandomCounter() {
 $(document).ready(function() {
 	//assign health and attack strength to each character (random)
 	$( ".button" ).each(function() {
-  		
+  		//HP
   		var healthDisplay = $("<div>")
 		healthDisplay.addClass("health")
 		$(healthDisplay).attr("health-points" , getRandomHp());
 		$(healthDisplay).html($(healthDisplay).attr("health-points"));
 		$(this).append(healthDisplay);
-
+		//ATTACK
 		var attackDisplay = $("<div>")
 		attackDisplay.addClass("attack")
 		$(attackDisplay).attr("attack-points" , getRandomAttack());
@@ -76,24 +62,31 @@ $(document).ready(function() {
 	
 //reset function 
 	// function reset() {
-
+			//location.reload();
 	// };
 	
 //attack button function: increases attack power by the base attack power (i.e. 6,12,18,24,30,etc.)
 //random attack accumulates, random counter stays the same. randomAttack decreases mainenemy HP. randomCounter decreases hero HP. 
-	$('.attackBtn').on("click", function() {
+	$('.attackBtn').on('click', function() {
 		var heroStr = $('#hero').find('.attack').attr("attack-points");
-		var enemyStr = $('.main-enemy').find('counter').attr("counter-points");
+		var enemyStr = $('.main-enemy').find('.counter').attr("counter-points");
 		var heroHP = $('#hero').find('.health').attr("health-points");
 		var enemyHP = $('.main-enemy').find('.health').attr("health-points");
-		enemyHP - heroStr;
-		heroHP - enemyStr;
-		$('#defender').html("You attacked for " + heroStr + "points.");
-		$('#defender').html("Enemy attacked for " + enemyStr + "points.")
-		heroStr += heroStr * 2;
+		heroNewHP = (enemyHP - heroStr);
+		enemyNewHP = (heroHP - enemyStr);
+		$('#brawl').html("You attacked for " + heroStr + " points. <br> Enemy attacked for " + enemyStr + " points.");
+		$('#hero').find('.health').html(heroNewHP);
+		$('.main-enemy').find('.health').html(enemyNewHP);
+		heroStr *= 2;
+
+		if(heroNewHP == 0) {
+			alert("Your Hero Lost...")
+		} else if(enemyNewHP == 0) {
+			alert("You have beaten the enemy!")
+		}
 	});
 
-//on click function for initial character selection
+//on click functions for initial character selection
 	$('.luke').on('click', function(e) {
 		var clickedOn = $(e.target);
     	if (clickedOn.parents().is('#characterSelection')){
@@ -108,8 +101,7 @@ $(document).ready(function() {
 			//assign counter attack stat only when enemy character is a defender. counter attack power never changes
 			var counterDisplay = $("<div>")
 			counterDisplay.addClass("counter")
-			$(".luke").find('.main-enemy').attr("counter-points" , getRandomCounter());
-			// $(counterDisplay).html($(counterDisplay).attr("counterAttack"));
+			$(counterDisplay).attr("counter-points" , getRandomCounter());
 			$(this).append(counterDisplay);
 		}
 	});
@@ -126,8 +118,7 @@ $(document).ready(function() {
 			$('.vader').addClass("main-enemy").appendTo('#defender');
 			var counterDisplay = $("<div>")
 			counterDisplay.addClass("counter")
-			$(".vader").find('.main-enemy').attr("counter-points" , getRandomCounter());
-			// $(counterDisplay).html($(counterDisplay).attr("counterAttack"));
+			$(counterDisplay).attr("counter-points" , getRandomCounter());
 			$(this).append(counterDisplay);
 		}
 	});
@@ -144,8 +135,7 @@ $(document).ready(function() {
 			$('.kyloRen').addClass("main-enemy").appendTo('#defender');
 			var counterDisplay = $("<div>")
 			counterDisplay.addClass("counter")
-			$(".kyloRen").find('.main-enemy').attr("counter-points" , getRandomCounter());
-			// $(counterDisplay).html($(counterDisplay).attr("counterAttack"));
+			$(counterDisplay).attr("counter-points" , getRandomCounter());
 			$(this).append(counterDisplay);
 		}
 	});
@@ -162,8 +152,7 @@ $(document).ready(function() {
 			$('.rey').addClass("main-enemy").appendTo('#defender');
 			var counterDisplay = $("<div>")
 			counterDisplay.addClass("counter")
-			$(".rey").find('.main-enemy').attr("counter-points" , getRandomCounter());
-			// $(counterDisplay).html($(counterDisplay).attr("counterAttack"));
+			$(counterDisplay).attr("counter-points" , getRandomCounter());
 			$(this).append(counterDisplay);
 		}
 	});
